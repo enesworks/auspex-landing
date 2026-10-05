@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Auspex — Autonomous Web Security Scanner &amp; Exploit Suite</title>
+<meta name="description" content="Auspex is an autonomous web security scanner and exploit suite. 62 modules, WAF/TLS evasion, zero-touch loot chain, and a 20-minute self-limiting pipeline." />
+<link rel="icon" type="image/png" href="assets/auspex.png" />
+<style>
+  :root {
+    --bg: #0a0e14; --bg2: #0f141d; --panel: #141a24; --border: #1f2836;
+    --cyan: #06b6d4; --cyan-dim: #0e7490; --text: #d7e0ea; --muted: #8b98a9;
+    --accent: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--cyan); text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10, 14, 20, 0.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.4px; }
+  .brand img { width: 28px; height: 28px; border-radius: 6px; }
+  .brand .v { color: var(--cyan); }
+  nav .links { display: flex; gap: 22px; font-size: 14px; }
+  nav .links a { color: var(--muted); transition: color .15s; }
+  nav .links a:hover { color: var(--text); }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 8px;
+    font-weight: 600; font-size: 14px; border: 1px solid transparent;
+    transition: all .15s; cursor: pointer;
+  }
+  .btn-primary { background: var(--cyan); color: #041014; }
+  .btn-primary:hover { background: #22d3ee; }
+  .btn-ghost { border-color: var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hero { padding: 96px 0 64px; text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid var(--cyan-dim); border-radius: 999px;
+    padding: 5px 14px; margin-bottom: 22px;
+  }
+  .hero h1 { font-size: 46px; line-height: 1.1; font-weight: 800; letter-spacing: -0.5px; }
+  .hero h1 .g { background: linear-gradient(90deg, var(--cyan), #38bdf8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.sub { max-width: 620px; margin: 20px auto 0; color: var(--muted); font-size: 17px; }
+  .hero .cta { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .shot { padding: 40px 0 80px; }
+  .frame {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7);
+  }
+  .frame .bar {
+    display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+  }
+  .frame .bar i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .frame .bar i:nth-child(1) { background: #ef4444; }
+  .frame .bar i:nth-child(2) { background: #f59e0b; }
+  .frame .bar i:nth-child(3) { background: #22c55e; }
+  .frame .bar span { margin-left: 10px; font-size: 12px; color: var(--muted); font-family: ui-monospace, monospace; }
+  .frame img { width: 100%; display: block; }
+  section { padding: 72px 0; }
+  .kicker { color: var(--cyan); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .lead { color: var(--muted); max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-top: 34px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: transform .15s, border-color .15s; }
+  .card:hover { transform: translateY(-3px); border-color: var(--cyan-dim); }
+  .card .icon { font-size: 22px; margin-bottom: 12px; }
+  .card h3 { font-size: 16px; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 14px; }
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 34px; }
+  .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 22px; text-align: center; }
+  .stat .n { font-size: 34px; font-weight: 800; color: var(--cyan); }
+  .stat .l { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .chip { background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-family: ui-monospace, monospace; }
+  .cta-band { background: linear-gradient(180deg, var(--bg2), var(--bg)); border: 1px solid var(--border); border-radius: 16px; padding: 56px 32px; text-align: center; }
+  .cta-band h2 { margin-bottom: 10px; }
+  .cta-band p { color: var(--muted); margin-bottom: 26px; }
+  footer { border-top: 1px solid var(--border); padding: 34px 0; margin-top: 40px; }
+  footer .inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 32px; }
+    nav .links { display: none; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand"><img src="assets/auspex.png" alt="Auspex" /><span>Auspex <span class="v">v4.1</span></span></div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow">Autonomous Web Security</span>
+  <h1>One target.<br /><span class="g">Zero operator input.</span></h1>
+  <p class="sub">
+    Auspex is an autonomous scanner and exploit suite that chains 62 security modules,
+    evades modern WAF and TLS fingerprinting, and runs a self-limiting 20-minute pipeline —
+    from a single portable Windows app.
+  </p>
+  <div class="cta">
+    <a class="btn btn-primary" href="#contact">Request a Demo</a>
+    <a class="btn btn-ghost" href="#features">Explore Features</a>
+  </div>
+</header>
+
+<section class="shot wrap">
+  <div class="frame">
+    <div class="bar"><i></i><i></i><i></i><span>auspex — desktop console</span></div>
+    <img src="assets/auspex.png" alt="Auspex desktop interface" loading="lazy" />
+  </div>
+</section>
+<section id="features" class="wrap">
+  <div class="kicker">Value Proposition</div>
+  <h2>Built to find what scanners miss</h2>
+  <p class="lead">Auspex doesn&rsquo;t just scan — it verifies, chains findings into action, and extracts real proof when a vulnerability is real. No false-positive noise, no babysitting.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">62</div><div class="l">Security modules</div></div>
+    <div class="stat"><div class="n">20m</div><div class="l">Self-limiting pipeline</div></div>
+    <div class="stat"><div class="n">JA3/JA4</div><div class="l">TLS fingerprint rotation</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">Manual steps after start</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="icon">&#128737;&#65039;</div>
+      <h3>62 Security Modules</h3>
+      <p>OWASP coverage, API security, JWT attacks, SQLi, SSTI, SSRF, XXE, IDOR, LFI/RFI, request smuggling, race conditions and more — in one pass.</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#127760;</div>
+      <h3>WAF &amp; TLS Evasion</h3>
+      <p>curl_cffi-driven JA3/JA4 fingerprint rotation impersonates real browsers, with adaptive payload obfuscation and a live-first proxy pool.</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#9203;</div>
+      <h3>20-Minute Time Budget</h3>
+      <p>A hard watchdog ceiling means a scan can never hang. The scanner self-limits, and the exploit phase uses only the remaining time.</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#128274;</div>
+      <h3>Zero-Touch Loot Chain</h3>
+      <p>The moment a JWT is broken, Auspex auto-discovers protected endpoints, follows pagination, and validates harvested data — no operator input.</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#128640;</div>
+      <h3>Autonomous Mode</h3>
+      <p>Enter a target and walk away. Scope fail-closed, adaptive rate limiting, and hybrid fallback keep the run safe and self-managing.</p>
+    </div>
+    <div class="card">
+      <div class="icon">&#128205;</div>
+      <h3>False-Positive Hardening</h3>
+      <p>Baseline comparison, soft-200 catch-all detection, and content-hash verification filter out the noise so real findings stand out.</p>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="wrap">
+  <div class="kicker">Tech Stack</div>
+  <h2>Engineered for speed and stealth</h2>
+  <p class="lead">A native desktop app with a Python core, packaged into a single portable executable.</p>
+  <div class="chips">
+    <span class="chip">Python 3.9+</span>
+    <span class="chip">AsyncIO</span>
+    <span class="chip">Playwright</span>
+    <span class="chip">curl_cffi</span>
+    <span class="chip">Electron</span>
+    <span class="chip">React</span>
+    <span class="chip">PyInstaller (.exe)</span>
+    <span class="chip">REST API</span>
+  </div>
+</section>
+
+<section id="contact" class="wrap">
+  <div class="cta-band">
+    <div class="kicker">Get Access</div>
+    <h2>See Auspex in action</h2>
+    <p>Request a private demo or ask about acquisition. No source code is published — access is shared only under NDA.</p>
+    <a class="btn btn-primary" href="mailto:contact@auspex.security?subject=Auspex%20Demo%20Request">Request a Demo</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap inner">
+    <span>&copy; 2026 Auspex. All rights reserved.</span>
+    <span>Autonomous security tooling &middot; Windows x64</span>
+  </div>
+</footer>
+
+</body>
+</html>
