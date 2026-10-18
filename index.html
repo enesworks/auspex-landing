@@ -77,6 +77,9 @@
   .card .icon { font-size: 22px; margin-bottom: 12px; }
   .card h3 { font-size: 16px; margin-bottom: 8px; }
   .card p { color: var(--muted); font-size: 14px; }
+  .module-list { color: var(--muted); font-size: 13px; margin: 12px 0 0 18px; }
+  .module-list li { margin: 4px 0; }
+  .workflow-note { border-left: 3px solid var(--cyan); padding: 12px 16px; margin-top: 24px; background: var(--bg2); color: var(--muted); font-size: 14px; }
   .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 34px; }
   .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 22px; text-align: center; }
   .stat .n { font-size: 34px; font-weight: 800; color: var(--cyan); }
@@ -176,62 +179,93 @@
 <section id="coverage" class="wrap">
   <div class="kicker">Module Coverage</div>
   <h2>What the 62-module workflow covers</h2>
-  <p class="lead">Modules are grouped by assessment area. Individual checks can produce no result, time out, or require review; coverage and outcomes depend on the target and configuration.</p>
+  <p class="lead">The application has 62 registered security modules. The lists below show the full module set; a check may return no finding, time out, or need manual review depending on the target, access, and configuration.</p>
 
   <div class="grid">
     <div class="card">
       <h3>Reconnaissance · 15</h3>
       <p>Crawling and endpoint discovery, forms and parameters, subdomains, ports, HTTP and TLS configuration, CMS/framework identification, and callback checks.</p>
+      <ul class="module-list">
+        <li>Port Scanner</li><li>HTTP Header Analysis</li><li>SSL/TLS Check</li><li>Directory/File Discovery</li>
+        <li>robots.txt / sitemap.xml</li><li>Form &amp; Parameter Discovery</li><li>Link/Parameter Crawler</li>
+        <li>Deep Pivot (Backup/Swagger/API)</li><li>Subdomain Enumeration</li><li>Subdomain Takeover Check</li>
+        <li>CMS Fingerprint</li><li>Framework Vulnerability/Leak Check</li><li>HTTP Methods</li>
+        <li>FTP Anonymous Access Check</li><li>Out-of-Band Callback Check</li>
+      </ul>
     </div>
     <div class="card">
-      <h3>SQL &amp; other injection · 17</h3>
-      <p>Error, time-based and Boolean SQL injection checks; NoSQL, LDAP and parameter injection; XSS, template injection, command injection, XXE, file inclusion, path traversal, CRLF, and deserialization checks.</p>
+      <h3>SQL Injection · 7</h3>
+      <p>SQL and related query-input checks, including discovered parameters and direct database connectivity checks.</p>
+      <ul class="module-list">
+        <li>SQL Injection (Error)</li><li>SQL Injection (Time-Based)</li><li>SQL Injection (Boolean)</li>
+        <li>NoSQL Injection</li><li>LDAP Injection</li><li>Discovered Parameter Injection</li><li>Direct DB Connection Check</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Other Injection · 10</h3>
+      <p>Input-handling checks across browser, template, file, command, and parser contexts.</p>
+      <ul class="module-list">
+        <li>XSS (Reflected)</li><li>XSS (Stored)</li><li>XSS (DOM)</li><li>SSTI (Template Injection)</li>
+        <li>Command Injection</li><li>CRLF Injection</li><li>XXE (XML Entity)</li><li>LFI / Path Traversal</li>
+        <li>RFI (Remote File Include)</li><li>Deserialization</li>
+      </ul>
     </div>
     <div class="card">
       <h3>SSRF, redirects &amp; OAuth · 3</h3>
       <p>Server-side request forgery, open-redirect, and OAuth security checks.</p>
+      <ul class="module-list"><li>SSRF</li><li>Open Redirect</li><li>OAuth 2.0 Tests</li></ul>
     </div>
     <div class="card">
       <h3>Authentication &amp; access · 5</h3>
       <p>IDOR and broken-access-control checks, authentication review, CSRF-token checks, and JWT analysis.</p>
+      <ul class="module-list"><li>IDOR</li><li>Broken Access Control</li><li>Authentication Tests</li><li>CSRF Token Missing</li><li>JWT Analysis</li></ul>
     </div>
     <div class="card">
       <h3>Configuration, API &amp; logic · 18</h3>
       <p>CORS and host-header configuration, mass assignment, prototype pollution, GraphQL and API checks, cache behavior, request smuggling, race conditions, business logic, WebSockets, uploads, and supply-chain integrity checks.</p>
+      <ul class="module-list">
+        <li>CORS Misconfiguration</li><li>Host Header Injection</li><li>Mass Assignment / HPP</li><li>Prototype Pollution</li>
+        <li>GraphQL</li><li>Web Cache Poisoning</li><li>HTTP Request Smuggling</li><li>Race Condition</li>
+        <li>Business Logic</li><li>Fail-Open Check</li><li>Security Misconfiguration</li><li>Unauthenticated Infrastructure Services</li>
+        <li>WebSocket Check</li><li>API Security</li><li>File Upload Check</li><li>Supply Chain / SRI</li>
+        <li>WAF Bypass</li><li>Form Injection (CSRF-aware)</li>
+      </ul>
     </div>
     <div class="card">
       <h3>Static data &amp; cloud · 4</h3>
       <p>Static-site and framework data exposure checks, cloud-storage configuration, and cloud-native configuration checks.</p>
+      <ul class="module-list"><li>Static Site Data Discovery</li><li>Next.js SSG Data Payload</li><li>Cloud Storage (S3/Azure/GCS)</li><li>Cloud-Native (K8s/Serverless)</li></ul>
     </div>
   </div>
 
   <div class="kicker" style="margin-top:48px">Workflow &amp; Supporting Components</div>
   <div class="grid">
     <div class="card">
-      <h3>Discovery and crawling</h3>
-      <p>Starts from the configured target, discovers links, forms, parameters, and API-related paths, then makes those inputs available to scan modules.</p>
+      <h3>Proxy intake and preflight</h3>
+      <p>Can load locally available proxy lists and check proxy connectivity before the assessment. Availability and exit-IP verification depend on the supplied proxies and network conditions.</p>
     </div>
     <div class="card">
-      <h3>Finding analysis</h3>
-      <p>Analyzes and prioritizes findings for follow-up. False-positive reduction is a focus, not a guarantee; findings should be reviewed.</p>
+      <h3>Crawl and surface discovery</h3>
+      <p>Begins with the configured website, discovers links, forms, parameters, and API-related paths, and feeds discovered inputs into relevant checks. Optional authentication can enable an additional crawl pass.</p>
     </div>
     <div class="card">
-      <h3>Finding-based exploit validation</h3>
-      <p>Eligible findings are mapped to relevant validation routines. Attempts can succeed, fail, or time out; outcomes depend on the target and should be reviewed.</p>
+      <h3>Static data discovery</h3>
+      <p>Inspects reachable page state, browser storage, JavaScript/source-map assets, framework data, and discoverable files. It may identify exposed data or additional backend URLs; it cannot guarantee access to private data.</p>
     </div>
     <div class="card">
-      <h3>Proxy and scope settings</h3>
-      <p>Can ingest locally available proxy lists and provides target-scope settings. Only run assessments on systems you own or are explicitly authorized to test.</p>
+      <h3>Dynamic backend/API pass</h3>
+      <p>A separate dynamic backend phase follows the static discovery phase and the main module checks. It examines reachable application/API behavior and may use eligible discovered evidence for follow-up. It is an additional phase, not only a fallback triggered when static discovery finds nothing.</p>
     </div>
     <div class="card">
-      <h3>Evidence and reporting</h3>
-      <p>When validation succeeds, follow-up evidence or loot collection may run automatically. The workflow produces scan findings and report outputs for review.</p>
+      <h3>Analysis and validation</h3>
+      <p>Findings are analyzed and prioritized. Eligible findings can trigger relevant validation attempts; checks may fail or time out, and results should be reviewed before being treated as confirmed.</p>
     </div>
     <div class="card">
-      <h3>JWT and API follow-up</h3>
-      <p>Qualifying JWT results can trigger API discovery and data-retrieval attempts. The amount returned depends on access and endpoint behavior; complete database extraction is not guaranteed.</p>
+      <h3>Conditional collection and reports</h3>
+      <p>When authorized validation paths yield accessible evidence, follow-up collection and an evidence archive may run. Scan results and reports are produced for review; complete database extraction is not guaranteed.</p>
     </div>
   </div>
+  <p class="workflow-note">The workflow is designed for systems you own or are explicitly authorized to assess. Time limits, access controls, rate limits, and target behavior can leave individual checks incomplete.</p>
 </section>
 
 <section id="stack" class="wrap">
