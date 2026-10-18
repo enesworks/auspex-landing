@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Auspex — Autonomous Web Security Scanner &amp; Exploit Suite</title>
-<meta name="description" content="Auspex is an autonomous web security scanner and exploit suite. 62 modules, WAF/TLS evasion, zero-touch loot chain, and a 20-minute self-limiting pipeline." />
+<meta name="description" content="Auspex is a Windows desktop tool for authorized web security assessments, combining 62 modules with automated analysis, validation attempts, evidence collection, and reporting." />
 <link rel="icon" type="image/png" href="assets/auspex.png" />
 <style>
   :root {
@@ -108,11 +108,12 @@
 
 <header class="hero wrap">
   <span class="eyebrow">Autonomous Web Security</span>
-  <h1>One target.<br /><span class="g">Zero operator input.</span></h1>
+  <h1>Configure once.<br /><span class="g">Automate the assessment.</span></h1>
   <p class="sub">
-    Auspex is an autonomous scanner and exploit suite that chains 62 security modules,
-    evades modern WAF and TLS fingerprinting, and runs a self-limiting 20-minute pipeline —
-    from a single portable Windows app.
+    Auspex is a Windows desktop tool for authorized web security assessments. After the target
+    and settings are configured, it can load locally available proxy lists, crawl the site,
+    run 62 modules, analyze findings, attempt relevant validation checks, and collect evidence
+    automatically when a check succeeds.
   </p>
   <div class="cta">
     <a class="btn btn-primary" href="#contact">Request a Demo</a>
@@ -128,54 +129,53 @@
 </section>
 <section id="features" class="wrap">
   <div class="kicker">Value Proposition</div>
-  <h2>Built to find what scanners miss</h2>
-  <p class="lead">Auspex doesn&rsquo;t just scan — it verifies, chains findings into action, and extracts real proof when a vulnerability is real. No false-positive noise, no babysitting.</p>
+  <h2>An automated web security workflow</h2>
+  <p class="lead">Auspex brings proxy-list ingestion, crawling, modular checks, finding-based analysis, relevant exploit-validation attempts, and reporting into one workflow. Successful checks can trigger automatic evidence and loot collection. False-positive reduction has been a focus of testing, but results still require review and can vary by target.</p>
 
   <div class="stat-row">
     <div class="stat"><div class="n">62</div><div class="l">Security modules</div></div>
-    <div class="stat"><div class="n">20m</div><div class="l">Self-limiting pipeline</div></div>
-    <div class="stat"><div class="n">JA3/JA4</div><div class="l">TLS fingerprint rotation</div></div>
-    <div class="stat"><div class="n">0</div><div class="l">Manual steps after start</div></div>
+    <div class="stat"><div class="n">Per-module</div><div class="l">Timeout handling</div></div>
+    <div class="stat"><div class="n">Auto</div><div class="l">Workflow after configuration</div></div>
   </div>
 
   <div class="grid">
     <div class="card">
       <div class="icon">&#128737;&#65039;</div>
       <h3>62 Security Modules</h3>
-      <p>OWASP coverage, API security, JWT attacks, SQLi, SSTI, SSRF, XXE, IDOR, LFI/RFI, request smuggling, race conditions and more — in one pass.</p>
+      <p>A broad set of web and API security checks runs as part of one configured assessment. Module coverage and results depend on the target and scan settings.</p>
     </div>
     <div class="card">
       <div class="icon">&#127760;</div>
-      <h3>WAF &amp; TLS Evasion</h3>
-      <p>curl_cffi-driven JA3/JA4 fingerprint rotation impersonates real browsers, with adaptive payload obfuscation and a live-first proxy pool.</p>
+      <h3>Timeout-aware checks</h3>
+      <p>Requests and modules use time limits. A timed-out check may be incomplete or skipped, and should be reviewed in the final results.</p>
     </div>
     <div class="card">
       <div class="icon">&#9203;</div>
-      <h3>20-Minute Time Budget</h3>
-      <p>A hard watchdog ceiling means a scan can never hang. The scanner self-limits, and the exploit phase uses only the remaining time.</p>
+      <h3>Timeout-aware module queue</h3>
+      <p>The UI exposes a scan-time setting, while completion mode can run beyond that value to allow the module queue to progress. Individual modules have their own timeouts; a timed-out check may be incomplete while later checks continue.</p>
     </div>
     <div class="card">
       <div class="icon">&#128274;</div>
-      <h3>Zero-Touch Loot Chain</h3>
-      <p>The moment a JWT is broken, Auspex auto-discovers protected endpoints, follows pagination, and validates harvested data — no operator input.</p>
+      <h3>Finding-based validation and loot</h3>
+      <p>Auspex analyzes findings, selects relevant checks, and attempts validation. When a check succeeds, follow-up evidence or loot collection can run automatically. JWT-related checks can lead to API discovery and data-retrieval attempts; complete database extraction is not guaranteed.</p>
     </div>
     <div class="card">
       <div class="icon">&#128640;</div>
       <h3>Autonomous Mode</h3>
-      <p>Enter a target and walk away. Scope fail-closed, adaptive rate limiting, and hybrid fallback keep the run safe and self-managing.</p>
+      <p>After the target and settings are entered, the workflow proceeds without routine operator input. Use only against systems you own or are explicitly authorized to assess.</p>
     </div>
     <div class="card">
       <div class="icon">&#128205;</div>
       <h3>False-Positive Hardening</h3>
-      <p>Baseline comparison, soft-200 catch-all detection, and content-hash verification filter out the noise so real findings stand out.</p>
+      <p>Baseline comparisons and response checks help reduce false positives. They do not eliminate them, so findings should be reviewed before being treated as confirmed.</p>
     </div>
   </div>
 </section>
 
 <section id="stack" class="wrap">
   <div class="kicker">Tech Stack</div>
-  <h2>Engineered for speed and stealth</h2>
-  <p class="lead">A native desktop app with a Python core, packaged into a single portable executable.</p>
+  <h2>Built for further development</h2>
+  <p class="lead">A Windows desktop application with a Python core and an Electron/React interface. The next owner can review, modify, and extend the codebase.</p>
   <div class="chips">
     <span class="chip">Python 3.9+</span>
     <span class="chip">AsyncIO</span>
@@ -192,7 +192,7 @@
   <div class="cta-band">
     <div class="kicker">Get Access</div>
     <h2>See Auspex in action</h2>
-    <p>Request a private demo or ask about acquisition. No source code is published — access is shared only under NDA.</p>
+    <p>For authorized security testing only. Actual scan duration can exceed the configured scan-time value in completion mode. Some checks may time out or remain incomplete, and database data retrieval is not guaranteed. Request a private demo or ask about acquisition. Product source code can be reviewed privately during buyer due diligence, subject to agreed terms.</p>
     <a class="btn btn-primary" href="mailto:contact@auspex.security?subject=Auspex%20Demo%20Request">Request a Demo</a>
   </div>
 </section>
