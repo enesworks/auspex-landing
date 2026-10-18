@@ -100,6 +100,7 @@
     <div class="brand"><img src="assets/auspex.png" alt="Auspex" /><span>Auspex <span class="v">v4.1</span></span></div>
     <div class="links">
       <a href="#features">Features</a>
+      <a href="#coverage">Coverage</a>
       <a href="#stack">Tech Stack</a>
       <a href="#contact">Contact</a>
     </div>
@@ -168,6 +169,67 @@
       <div class="icon">&#128205;</div>
       <h3>False-Positive Hardening</h3>
       <p>Baseline comparisons and response checks help reduce false positives. They do not eliminate them, so findings should be reviewed before being treated as confirmed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="coverage" class="wrap">
+  <div class="kicker">Module Coverage</div>
+  <h2>What the 62-module workflow covers</h2>
+  <p class="lead">Modules are grouped by assessment area. Individual checks can produce no result, time out, or require review; coverage and outcomes depend on the target and configuration.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Reconnaissance · 15</h3>
+      <p>Crawling and endpoint discovery, forms and parameters, subdomains, ports, HTTP and TLS configuration, CMS/framework identification, and callback checks.</p>
+    </div>
+    <div class="card">
+      <h3>SQL &amp; other injection · 17</h3>
+      <p>Error, time-based and Boolean SQL injection checks; NoSQL, LDAP and parameter injection; XSS, template injection, command injection, XXE, file inclusion, path traversal, CRLF, and deserialization checks.</p>
+    </div>
+    <div class="card">
+      <h3>SSRF, redirects &amp; OAuth · 3</h3>
+      <p>Server-side request forgery, open-redirect, and OAuth security checks.</p>
+    </div>
+    <div class="card">
+      <h3>Authentication &amp; access · 5</h3>
+      <p>IDOR and broken-access-control checks, authentication review, CSRF-token checks, and JWT analysis.</p>
+    </div>
+    <div class="card">
+      <h3>Configuration, API &amp; logic · 18</h3>
+      <p>CORS and host-header configuration, mass assignment, prototype pollution, GraphQL and API checks, cache behavior, request smuggling, race conditions, business logic, WebSockets, uploads, and supply-chain integrity checks.</p>
+    </div>
+    <div class="card">
+      <h3>Static data &amp; cloud · 4</h3>
+      <p>Static-site and framework data exposure checks, cloud-storage configuration, and cloud-native configuration checks.</p>
+    </div>
+  </div>
+
+  <div class="kicker" style="margin-top:48px">Workflow &amp; Supporting Components</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Discovery and crawling</h3>
+      <p>Starts from the configured target, discovers links, forms, parameters, and API-related paths, then makes those inputs available to scan modules.</p>
+    </div>
+    <div class="card">
+      <h3>Finding analysis</h3>
+      <p>Analyzes and prioritizes findings for follow-up. False-positive reduction is a focus, not a guarantee; findings should be reviewed.</p>
+    </div>
+    <div class="card">
+      <h3>Finding-based exploit validation</h3>
+      <p>Eligible findings are mapped to relevant validation routines. Attempts can succeed, fail, or time out; outcomes depend on the target and should be reviewed.</p>
+    </div>
+    <div class="card">
+      <h3>Proxy and scope settings</h3>
+      <p>Can ingest locally available proxy lists and provides target-scope settings. Only run assessments on systems you own or are explicitly authorized to test.</p>
+    </div>
+    <div class="card">
+      <h3>Evidence and reporting</h3>
+      <p>When validation succeeds, follow-up evidence or loot collection may run automatically. The workflow produces scan findings and report outputs for review.</p>
+    </div>
+    <div class="card">
+      <h3>JWT and API follow-up</h3>
+      <p>Qualifying JWT results can trigger API discovery and data-retrieval attempts. The amount returned depends on access and endpoint behavior; complete database extraction is not guaranteed.</p>
     </div>
   </div>
 </section>
