@@ -9,18 +9,6 @@ The product itself is proprietary and shared under NDA.
 
 - GitHub Pages: `https://enesworks.github.io/auspex-landing/`
 
-## Structure
-
-```
-index.html          # single-file landing page (dark theme, no build step)
-assets/auspex.png   # desktop interface screenshot
-.nojekyll           # serves raw HTML on GitHub Pages
-```
-
-## Edit
-
-Edit `index.html` directly and push to `main`. GitHub Pages serves the repo root.
-
 ## Contact
 
 Request a demo / acquisition inquiry via the contact button on the page.
